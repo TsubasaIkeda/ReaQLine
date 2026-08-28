@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+*~
+
+# 配布物
+*.zip
+dist/
+
+# REAPER が生成するもの
+*.rpp-bak
+reaper-*.ini
