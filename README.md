@@ -124,3 +124,7 @@ reaqline/
 
 日本語のリージョン名が文字化けする場合は、ReaImGui を更新するか、
 名前をローマ字にしてください。
+
+## ライセンス
+
+[MIT License](LICENSE)
