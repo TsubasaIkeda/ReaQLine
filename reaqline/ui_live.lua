@@ -52,7 +52,7 @@ function M.draw()
     local s = S.songs[S.sel_song]
     W.textCol(COL.dim_text,
               s and string.format('%02d  %s', S.sel_song, s.name)
-                or '(曲がありません)')
+                or '(no songs)')
   end
   Gui.popFont()
 
@@ -61,7 +61,7 @@ function M.draw()
   -- セクションと残り時間。幅が狭い時は折り返す。
   Gui.pushFont(f_body)
   if managed then
-    local sec_name = S.cur_section and S.cur_section.name or '(先頭)'
+    local sec_name = S.cur_section and S.cur_section.name or '(start)'
     local sec_rem  = S.cur_section and (S.cur_section.endpos - pos) or nil
     local song_rem = S.play_song.rgnend - pos
 
@@ -77,17 +77,17 @@ function M.draw()
     local col = (sec_rem and sec_rem <= CFG.WARN_SEC and not S.loop_active)
                 and COL.warn_text or COL.dim_text
     ImGui.PushStyleColor(ctx, ImGui.Col_Text, col)
-    ImGui.Text(ctx, string.format('%s残り %s',
+    ImGui.Text(ctx, string.format('%sLeft %s',
                                   wrap and '' or '   ', W.fmtTime(sec_rem)))
     ImGui.PopStyleColor(ctx)
 
     ImGui.SameLine(ctx)
     local scol = (song_rem <= CFG.WARN_SEC) and COL.warn_text or COL.dim_text
     ImGui.PushStyleColor(ctx, ImGui.Col_Text, scol)
-    ImGui.Text(ctx, string.format('   曲残り %s', W.fmtTime(song_rem)))
+    ImGui.Text(ctx, string.format('   Song left %s', W.fmtTime(song_rem)))
     ImGui.PopStyleColor(ctx)
   else
-    W.textCol(COL.dim_text, '待機')
+    W.textCol(COL.dim_text, 'Idle')
   end
   Gui.popFont()
 
@@ -123,17 +123,17 @@ function M.draw()
   -- 次のセクション / 次の曲
   if managed then
     local nx = Model.nextSectionOf(S.play_song, S.cur_section)
-    W.textCol(COL.dim_text, '次のセクション: ' .. (nx and nx.name or '(曲の終わり)'))
+    W.textCol(COL.dim_text, 'Next section: ' .. (nx and nx.name or '(end of song)'))
 
     local ns = S.songs[S.playing_idx + 1]
     if ns and ns.follow then
-      W.textCol(COL.loop_text, '次の曲: ' .. ns.name .. '   [FOLLOW]')
+      W.textCol(COL.loop_text, 'Next song: ' .. ns.name .. '   [FOLLOW]')
     else
-      W.textCol(COL.dim_text, '次の曲: ' .. (ns and ns.name or '(最終曲)'))
+      W.textCol(COL.dim_text, 'Next song: ' .. (ns and ns.name or '(last song)'))
     end
   else
     local ns = S.songs[S.sel_song]
-    W.textCol(COL.dim_text, '選択中: ' .. (ns and ns.name or '—'))
+    W.textCol(COL.dim_text, 'Selected: ' .. (ns and ns.name or '-'))
     W.textCol(COL.dim_text, ' ')
   end
 

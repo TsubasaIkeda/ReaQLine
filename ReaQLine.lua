@@ -103,9 +103,9 @@ local CFG = require 'reaqline.config'
 -- ReaImGui のウィンドウは OS ウィンドウであり、フォーカスを持つ間は
 -- REAPER にキーが届かない。ImGui の設定では解決できない。
 if not reaper.APIExists('JS_Window_SetFocus') then
-  reaper.MB('js_ReaScriptAPI が必要です。\n\n' ..
-            'Extensions > ReaPack > Browse packages... から\n' ..
-            '「js_ReaScriptAPI」をインストールし、REAPER を再起動してください。',
+  reaper.MB('js_ReaScriptAPI is required.\n\n' ..
+            'Install "js_ReaScriptAPI" from\n' ..
+            'Extensions > ReaPack > Browse packages... and restart REAPER.',
             CFG.SCRIPT_NAME, 0)
   return
 end

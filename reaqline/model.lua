@@ -116,7 +116,7 @@ function M.rescan()
   if S.sel_song > #S.songs then
     S.sel_song = math.max(1, #S.songs)
   end
-  S.status_msg = string.format('%d 曲を検出', #S.songs)
+  S.status_msg = string.format('%d songs found', #S.songs)
 end
 
 --------------------------------------------------------------------------------

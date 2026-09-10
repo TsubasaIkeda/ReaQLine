@@ -29,12 +29,12 @@ local function drawSongList(w, h)
   local ImGui, ctx = Gui.ImGui, Gui.ctx
   local COL = CFG.COL
 
-  ImGui.Text(ctx, '曲 (リージョン順)')
+  ImGui.Text(ctx, 'Songs (region order)')
 
   if ImGui.BeginTable(ctx, 'songtbl', 5, W.tableFlags(), w, h) then
     ImGui.TableSetupColumn(ctx, '#',      ImGui.TableColumnFlags_WidthFixed, 32)
-    ImGui.TableSetupColumn(ctx, '曲名',   ImGui.TableColumnFlags_WidthStretch)
-    ImGui.TableSetupColumn(ctx, '長さ',   ImGui.TableColumnFlags_WidthFixed, 56)
+    ImGui.TableSetupColumn(ctx, 'Song',   ImGui.TableColumnFlags_WidthStretch)
+    ImGui.TableSetupColumn(ctx, 'Length', ImGui.TableColumnFlags_WidthFixed, 56)
     ImGui.TableSetupColumn(ctx, 'FOLLOW', ImGui.TableColumnFlags_WidthFixed, 60)
     ImGui.TableSetupColumn(ctx, 'LOOP',   ImGui.TableColumnFlags_WidthFixed, 48)
     ImGui.TableSetupScrollFreeze(ctx, 0, 1)
@@ -110,16 +110,16 @@ local function drawSectionTable(w, h)
 
   local song = Model.paneTargetSong()
 
-  ImGui.Text(ctx, 'セクション (マーカー)')
+  ImGui.Text(ctx, 'Sections (markers)')
   ImGui.SameLine(ctx)
-  W.textCol(COL.dim_text, '   > = 現在地 / 選択行 = 次のセクション')
+  W.textCol(COL.dim_text, '   > = current / selected row = next section')
 
   if ImGui.BeginTable(ctx, 'sectbl', 5, W.tableFlags(), w, h) then
     ImGui.TableSetupColumn(ctx, '',           ImGui.TableColumnFlags_WidthFixed, 20)
     ImGui.TableSetupColumn(ctx, 'LOOP',       ImGui.TableColumnFlags_WidthFixed, 44)
-    ImGui.TableSetupColumn(ctx, 'セクション', ImGui.TableColumnFlags_WidthStretch)
-    ImGui.TableSetupColumn(ctx, '開始',       ImGui.TableColumnFlags_WidthFixed, 56)
-    ImGui.TableSetupColumn(ctx, '長さ',       ImGui.TableColumnFlags_WidthFixed, 56)
+    ImGui.TableSetupColumn(ctx, 'Section',    ImGui.TableColumnFlags_WidthStretch)
+    ImGui.TableSetupColumn(ctx, 'Start',      ImGui.TableColumnFlags_WidthFixed, 56)
+    ImGui.TableSetupColumn(ctx, 'Length',     ImGui.TableColumnFlags_WidthFixed, 56)
     ImGui.TableSetupScrollFreeze(ctx, 0, 1)
     ImGui.TableHeadersRow(ctx)
 
@@ -177,7 +177,7 @@ local function drawSectionTable(w, h)
   end
 
   local sec = song and song.sections[S.sel_section]
-  if sec and ImGui.Button(ctx, 'このセクションへ移動') then
+  if sec and ImGui.Button(ctx, 'Go to this section') then
     Trans.seekToSection(song, sec)
   end
 end
@@ -192,9 +192,9 @@ function M.draw()
 
   local avail_w, avail_h = ImGui.GetContentRegionAvail(ctx)
 
-  if ImGui.Button(ctx, '再スキャン') then Model.rescan() end
+  if ImGui.Button(ctx, 'Rescan') then Model.rescan() end
   ImGui.SameLine(ctx)
-  W.textCol(COL.dim_text, '曲順の変更はタイムライン側で行う')
+  W.textCol(COL.dim_text, 'Change song order on the timeline')
 
   local body_h = avail_h - 60
   if body_h < 120 then body_h = 120 end

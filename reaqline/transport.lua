@@ -59,7 +59,7 @@ function M.startAt(index)
   S.play_song   = s
   S.cur_section = nil
   S.sel_song    = index
-  S.status_msg  = '再生: ' .. s.name
+  S.status_msg  = 'Playing: ' .. s.name
 
   reaper.SetEditCurPos(s.pos, true, false)
 
@@ -86,7 +86,7 @@ function M.stopAll(msg)
   S.play_song   = nil
   S.cur_section = nil
   S.loop_active = nil
-  S.status_msg  = msg or '停止'
+  S.status_msg  = msg or 'Stopped'
 end
 
 --------------------------------------------------------------------------------
@@ -119,14 +119,14 @@ function M.handleSongEnd()
 
     if gap > CFG.ADJ_TOL then
       reaper.SetEditCurPos(nxt.pos, true, true)
-      S.status_msg = string.format('FOLLOW(シーク): %s  →  %s', name, nxt.name)
+      S.status_msg = string.format('FOLLOW (seek): %s  ->  %s', name, nxt.name)
     else
-      S.status_msg = string.format('FOLLOW(連続): %s  →  %s', name, nxt.name)
+      S.status_msg = string.format('FOLLOW (gapless): %s  ->  %s', name, nxt.name)
     end
     return
   end
 
-  M.stopAll('曲終了: ' .. name)
+  M.stopAll('Song ended: ' .. name)
 
   if nxt then
     -- 停止処理でカーソルが動く場合があるため、停止後に移動させる
@@ -135,7 +135,7 @@ function M.handleSongEnd()
     S.sel_section = 1
     S.scroll_song = true
     S.scroll_sec  = true
-    S.status_msg  = S.status_msg .. '  →  次: ' .. nxt.name
+    S.status_msg  = S.status_msg .. '  ->  Next: ' .. nxt.name
   end
 end
 
@@ -148,9 +148,9 @@ end
 function M.requestNext()
   if S.tp.repeat_on then
     M.repeatOff()
-    S.status_msg = 'ループ解除'
+    S.status_msg = 'Loop released'
   else
-    S.status_msg = 'ループしていません'
+    S.status_msg = 'Not looping'
   end
 end
 
@@ -163,7 +163,7 @@ function M.adopt()
   S.sel_song    = idx
   S.cur_section = Model.sectionAt(S.play_song, S.tp.pos)
   S.loop_active = nil
-  S.status_msg  = '再生を取り込み: ' .. S.play_song.name
+  S.status_msg  = 'Adopted playback: ' .. S.play_song.name
 end
 
 -- リハーサル用。セクション頭へ即時シーク。
@@ -172,7 +172,7 @@ function M.seekToSection(song, section)
   M.repeatOff()
   reaper.SetEditCurPos(section.pos, true, true)
   S.cur_section = section
-  S.status_msg  = 'セクションへ移動: ' .. section.name
+  S.status_msg  = 'Moved to section: ' .. section.name
 end
 
 --------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ function M.update()
 
   -- ユーザーが REAPER 側で停止した場合に追従する
   if not tp.playing then
-    M.stopAll('停止されました')
+    M.stopAll('Stopped externally')
     return
   end
 

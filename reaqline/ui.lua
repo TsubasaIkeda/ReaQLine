@@ -80,16 +80,16 @@ local function drawFooter()
 
   ImGui.Separator(ctx)
 
-  if ImGui.Button(ctx, S.dock_id == 0 and 'ドッキング' or 'フロート') then
+  if ImGui.Button(ctx, S.dock_id == 0 and 'Dock' or 'Float') then
     setDock(S.dock_id == 0 and -1 or 0)
   end
 
   ImGui.SameLine(ctx)
-  W.textCol(COL.dim_text, 'KEY: 透過')
+  W.textCol(COL.dim_text, 'KEY: pass-through')
   if ImGui.IsItemHovered(ctx) then
     ImGui.SetTooltip(ctx,
-      '操作していない間はキーボードフォーカスを REAPER 本体へ返します。\n' ..
-      'REAPER の全ショートカットがそのまま使えます。')
+      'Keyboard focus is returned to REAPER while you are not interacting.\n' ..
+      'All REAPER shortcuts keep working as usual.')
   end
 
   ImGui.SameLine(ctx)
@@ -111,7 +111,7 @@ local function drawFooter()
     local e  = S.play_song and string.format('%.2f', S.play_song.rgnend) or '-'
     W.textCol(COL.dim_text, string.format(
       'DBG  %s  idx=%s  next.follow=%s  pos=%.2f  rgnend=%s  loop=%s  cur=%.2f  sel=%d/%d',
-      S.tp.playing and 'PLAY(pos基準)' or 'STOP(cur基準)',
+      S.tp.playing and 'PLAY(pos)' or 'STOP(cur)',
       tostring(S.playing_idx), a, S.tp.pos, e,
       tostring(S.loop_active ~= nil), S.last_cursor, S.sel_song, S.sel_section))
   end
@@ -146,11 +146,11 @@ function M.frame()
     end
 
     if ImGui.BeginTabBar(ctx, 'tabs') then
-      if ImGui.BeginTabItem(ctx, '本番') then
+      if ImGui.BeginTabItem(ctx, 'Live') then
         UILive.draw()
         ImGui.EndTabItem(ctx)
       end
-      if ImGui.BeginTabItem(ctx, '編集') then
+      if ImGui.BeginTabItem(ctx, 'Edit') then
         UIEdit.draw()
         ImGui.EndTabItem(ctx)
       end

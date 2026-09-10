@@ -19,7 +19,7 @@ local M = {}
 -- 失敗時は nil とエラーメッセージを返す。呼び出し側で終了処理を行う。
 function M.load()
   if not reaper.ImGui_GetBuiltinPath then
-    return nil, 'ReaImGui v0.9 以上が必要です。ReaPack からインストールしてください。'
+    return nil, 'ReaImGui v0.9 or later is required. Install it from ReaPack.'
   end
 
   package.path = reaper.ImGui_GetBuiltinPath() .. '/?.lua;' .. package.path
@@ -31,7 +31,7 @@ function M.load()
   end
 
   if not ImGui then
-    return nil, 'ReaImGui の読み込みに失敗しました。ReaPack で更新してください。'
+    return nil, 'Failed to load ReaImGui. Update it via ReaPack.'
   end
 
   M.ImGui = ImGui
@@ -138,7 +138,7 @@ function M.setupKeyboard()
       ImGui.SetConfigVar(ctx, ImGui.ConfigVar_Flags, cleared)
       note(string.format('NavEnableKeyboard off (%d->%d)', flags, cleared))
     else
-      note('ConfigFlags_NavEnableKeyboard なし')
+      note('ConfigFlags_NavEnableKeyboard n/a')
     end
   end)
 
@@ -148,7 +148,7 @@ function M.setupKeyboard()
       ImGui.SetConfigVar(ctx, ImGui.ConfigVar_NavCaptureKeyboard, 0)
       note('NavCaptureKeyboard=0')
     else
-      note('ConfigVar_NavCaptureKeyboard なし')
+      note('ConfigVar_NavCaptureKeyboard n/a')
     end
   end)
 
